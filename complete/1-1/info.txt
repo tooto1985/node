@@ -1,0 +1,27 @@
+var => 宣告變數
+
+function => 宣告涵式
+
+return => 回傳
+
+if ... else if ... else => 條件敘述
+
+switch ... case ... default => 陳述式
+
+for => 迴圈
+
+for ... in => 遍歷屬性
+
+while => 前測試迴圈
+
+do ... while => 後測試迴圈
+
+break => 中斷
+
+continue => 跳過
+
+throw => 擲回錯誤
+
+try ... catch ... finally => 嘗試...欄截錯誤...最後
+
+typeof => 判斷型別
