@@ -1,2 +1,2 @@
-var hello = require("./hello");
-console.log(hello.who("Tommy!"));
+var hi = require("./hi");
+console.log(hi.who("Tommy"));

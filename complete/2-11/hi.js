@@ -1,3 +1,3 @@
 exports.who = function(name) {
-    return "Hello " + name;
+    return "Hi " + name;
 };

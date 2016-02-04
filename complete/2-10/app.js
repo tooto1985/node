@@ -1,2 +1,2 @@
 var colors=require("colors");
-console.log("Hello ".green.bgRed+"World!".red.bgGreen);
+console.log("Text ".green.bgRed+" Color!".red.bgGreen);
