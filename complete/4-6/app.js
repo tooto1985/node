@@ -1,6 +1,6 @@
 var http = require("http");
 http.createServer(function(request, response) {
-    var html, contentType;
+    var html="", contentType="";
     var statusCode = 200;
     if (request.url === "/") {
         contentType = "text/html";
