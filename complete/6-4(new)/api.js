@@ -18,7 +18,7 @@ module.exports = function(request, response) {
             output.success = true;
             number = ~~(Math.random() * 10000);
         }
-        response.writeHead({
+        response.writeHead(200,{
             "Content-Type": "application/json"
         });
         response.write(JSON.stringify(output));
