@@ -22,7 +22,7 @@ module.exports = function(request, response) {
         response.end();
     }
     if(pathname === "/api/tips/") {
-        response.writeHead({
+        response.writeHead(200,{
             "Content-Type":"application/json"
         });
         var tips=[
