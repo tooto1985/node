@@ -7,8 +7,8 @@ module.exports = function(request, response) {
         if (pathname.substr(pathname.length - 1) === "/") {
             pathname += "index.html"; //若無帶入檔名預設為index.html
         } else {
-            var paths = pathname.split("/");
-            if (paths[paths.length - 1].indexOf(".") < 0) {
+            var paths = pathname.split("/").pop();
+            if (paths.indexOf(".") === -1) {
                 response.writeHead(301, {
                     "Location": pathname + "/" + (url.parse(request.url).search || "")
                 });

@@ -1,19 +1,8 @@
 var url = require("url");
-
+var querystring = require("querystring");
 module.exports = function(request, response) {
     var pathname = url.parse(request.url).pathname;
-    var format = {
-        "json": function() {
-            response.writeHead(200, {
-                "Content-Type": "application/json"
-            });
-            response.write(JSON.stringify({
-                message: "hello " + 
-            }));
-            response.end();
-        }
-    };
-    
+    if (pathname === "/api/login/" && request.method === "POST") {
 
 
 
@@ -22,5 +11,13 @@ module.exports = function(request, response) {
 
 
 
-    
+
+
+
+
+
+
+
+        });
+    }
 }

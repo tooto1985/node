@@ -1,37 +1,7 @@
 var http = require("http");
-var url = require("url");
+var api = require("./api");
+var static = require("./static");
 http.createServer(function(request, response) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    if (query.format && typeof format[query.format] === "function") {
-        format[query.format]();
-    } else {
-        response.writeHead(404);
-        response.write("404 not found");
-        response.end();
-    }
+    api(request, response);
+    static(request, response);
 }).listen(process.env.PORT || 3000);
