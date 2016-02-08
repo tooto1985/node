@@ -3,7 +3,7 @@ var url = require("url");
 var mime = require("mime");
 module.exports = function(request, response) {
     var pathname = url.parse(request.url).pathname;
-    if (pathname !== "/api/") {
+    if (!response.finished && request.method !== "POST") {
         if (pathname.substr(pathname.length - 1) === "/") {
             pathname += "index.html"; //若無帶入檔名預設為index.html
         } else {
@@ -16,7 +16,7 @@ module.exports = function(request, response) {
                 return;
             }
         }
-        pathname = (process.argv[2] || ".") + pathname; //若有傳入參數則使用參數的路徑
+        pathname = (process.argv[2] || "./public") + pathname; //若有傳入參數則使用參數的路徑
         pathname = decodeURI(pathname);
         try {
             if (fs.statSync(pathname).isFile()) {

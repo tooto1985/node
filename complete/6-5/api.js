@@ -1,19 +1,17 @@
+var util = require("util");
 var url = require("url");
+var querystring = require("querystring");
 module.exports = function(request, response) {
     var pathname = url.parse(request.url).pathname;
-    var query = url.parse(request.url, true).query;
-    var format = {
-        "json": function() {
-            response.writeHead(200, {
-                "Content-Type": "application/json"
-            });
-            response.write(JSON.stringify({
-                message: "hello " + query.username
-            }));
+    if (pathname === "/api/login/" && request.method === "POST") {
+        var postdata = "";
+        request.on("data", function(data) {
+            postdata += data;
+        });
+        request.on("end", function() {
+            console.log(postdata + " => " + util.inspect(querystring.parse(postdata)));
+            response.write("ok");
             response.end();
-        }
-    };
-    if (pathname === "/api/" && query.format && typeof format[query.format] === "function") {
-        format[query.format]();
+        });
     }
 }
