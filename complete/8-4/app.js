@@ -1,20 +1,30 @@
 var express = require("express");
+var path = require("path");
+var items = require("./items");
 var app = express();
 var session = require("express-session");
 app.use(session({
-    secret: "abcabcabcabc",
-    resave: true,
-    saveUninitialized: true
+	secret: "abcabcabcabc",
+	resave: true,
+	saveUninitialized: true
 }));
-app.get("/", function(req, res) {
-	console.log(req.sessionID);
-    res.send("ok");
+app.use(express.static(path.join(__dirname, "public")));
+app.get("/add", function(req, res) {
+	req.session["cart"] = req.session["cart"] || [];
+	req.session["cart"].push(items.get(req.query.item));
+	res.json(req.session["cart"]);
 });
-app.get("/get/:key",function(req,res) {
-	res.send(req.session[req.params.key]);
+app.get("/remove", function(req, res) {
+	var cart = req.session["cart"];
+	cart.splice(cart.indexOf(cart.filter(function(item) {
+		return item.name === req.query.item;
+	})[0]),1);
+	res.json(cart);
 });
-app.get("/set/:key/:value", function(req, res) {
-	req.session[req.params.key]=req.params.value;
-	res.send("set ok");
+app.get("/bag", function(req, res) {
+	res.json(req.session["cart"] || []);
+});
+app.get("/list", function(req, res) {
+	res.json(items.all());
 });
 app.listen(process.env.PORT || 3000);
