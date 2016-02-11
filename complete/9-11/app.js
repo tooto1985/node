@@ -30,7 +30,7 @@ app.get("/list",function(req,res){
     var age = req.query.age;
     if (age) {
         age = {age:{$gte:parseInt(age)}};
-    }   
+    }
     db.select(age,function(data){
         res.render("list",{data:data,query:req.query});
     },function(err) {

@@ -28,7 +28,7 @@ app.get("/list",function(req,res){
     var age = req.query.age;
     if (age) {
         age = {age:{$gte:parseInt(age)}};
-    }   
+    }
     select(age,function(data){
         res.render("list",{data:data,query:req.query});
     },function(err) {
@@ -114,7 +114,7 @@ function update(id,updateObject,success,error) {
                 } else {
                     if (error) error(err);
                 }
-            });             
+            });
         } else {
             if (error) error(err);
         }

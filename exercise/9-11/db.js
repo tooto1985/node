@@ -32,7 +32,7 @@ module.exports = function(mongodbUri,collectionName) {
                     } else {
                         if (error) error(err);
                     }
-                });         
+                });
             } else {
                 if (error) error(err);
             }
@@ -57,7 +57,7 @@ module.exports = function(mongodbUri,collectionName) {
                 });
             } else {
                 if (error) error(err);
-            }       
+            }
         });
     }
     this.update = function(id,updateObject,success,error) {
@@ -69,7 +69,7 @@ module.exports = function(mongodbUri,collectionName) {
                     } else {
                         if (error) error(err);
                     }
-                });             
+                });
             } else {
                 if (error) error(err);
             }

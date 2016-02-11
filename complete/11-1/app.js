@@ -10,30 +10,28 @@ var app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser());
 app.use(session({
-	secret: "abcabcabcabc",
-    resave: true,
-    saveUninitialized: true
+    secret: "abcabcabcabc"
 }));
 app.use(express.static(path.join(__dirname,"public")));
 app.get("/",function(req,res) {
-	res.render("index",{isLogin:req.session["login"]});
+    res.render("index",{isLogin:req.session["login"]});
 });
 app.post("/",function(req,res) {
-	var userid = req.body.userid;
-	var password = req.body.password;
-	db.select({userid:userid,password:password},function(data){
-		if(data.length===1) {
-			req.session["login"]=true;
-			res.redirect("/");
-		} else {
-			res.render("error",{message:"帳號密碼錯誤"});	
-		}
-	},function(err) {
-		console.log(err);
-	});
+    var userid = req.body.userid;
+    var password = req.body.password;
+    db.select({userid:userid,password:password},function(data){
+        if(data.length===1) {
+            req.session["login"]=true;
+            res.redirect("/");
+        } else {
+            res.render("error",{message:"帳號密碼錯誤"}); 
+        }
+    },function(err) {
+        console.log(err);
+    });
 });
 app.get("/logout",function(req,res){
-	req.session.destroy();
-	res.redirect("/");
+    req.session.destroy();
+    res.redirect("/");
 });
 app.listen(process.env.PORT || 3000);

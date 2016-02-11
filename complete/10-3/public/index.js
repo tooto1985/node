@@ -39,7 +39,7 @@
             $(".list").hide();
         } else {
             $("a.selected").removeClass();
-            $(this).addClass("selected");            
+            $(this).addClass("selected"); 
         }
     });
     $("#search").keyup(function(e) {

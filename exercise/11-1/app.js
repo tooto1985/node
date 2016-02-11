@@ -10,13 +10,11 @@ var app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser());
 app.use(session({
-	secret: "abcabcabcabc",
-    resave: true,
-    saveUninitialized: true
+    secret: "abcabcabcabc"
 }));
 app.use(express.static(path.join(__dirname,"public")));
 app.get("/",function(req,res) {
-	
+    
 });
 app.post("/",function(req,res) {
 
