@@ -7,12 +7,12 @@ var path = require("path");
 var app = express();
 app.use(express.static(path.join(__dirname,"public")));
 app.get("/api",function(req,res) {
-	var num = parseInt(req.query.num);
-	var fetch = parseInt(req.query.fetch);
-	db.select({$query:{num:{$gt:num}},$orderby:{num:1}},function(data){
-		res.json(data);
-	},function(err) {
-		console.log(err);
-	},fetch);
+    var num = parseInt(req.query.num);
+    var fetch = parseInt(req.query.fetch);
+    db.select({$query:{num:{$gt:num}},$orderby:{num:1}},function(data){
+        res.json(data);
+    },function(err) {
+        console.log(err);
+    },fetch);
 });
 app.listen(process.env.PORT || 3000);

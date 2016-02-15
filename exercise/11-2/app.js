@@ -10,9 +10,7 @@ var app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser());
 app.use(session({
-    secret: "abcabcabcabc",
-    resave: true,
-    saveUninitialized: true
+    secret: "abcabcabcabc"
 }));
 
 

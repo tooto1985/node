@@ -10,9 +10,7 @@ var app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser());
 app.use(session({
-    secret: "abcabcabcabc",
-    resave: true,
-    saveUninitialized: true
+    secret: "abcabcabcabc"
 }));
 app.get("/*",function(req,res,next) {
     var pages = [/private.html/i,/vip.html/i];
@@ -22,7 +20,7 @@ app.get("/*",function(req,res,next) {
     if (req.session["login"] || !check) {
         next(); 
     } else {
-        res.send("沒有權限");   
+        res.send("沒有權限");
     }
 });
 app.use(express.static(path.join(__dirname,"public")));

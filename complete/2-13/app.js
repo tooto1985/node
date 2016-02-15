@@ -1,4 +1,4 @@
-var mymodule = require("./mymodule");
+var mymodule = require("./MyModule");
 var a = new mymodule();
 console.log(a.version);
 a.setName("Mark");

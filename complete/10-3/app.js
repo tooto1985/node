@@ -7,13 +7,13 @@ var path = require("path");
 var app = express();
 app.use(express.static(path.join(__dirname,"public")));
 app.get("/api",function(req,res) {
-	var search = req.query.search;
-	db.select({name:new RegExp(search,"i")},function(data) {
-		res.json(data.map(function(a) {
-			return a.name;
-		}));
-	},function(err) {
-		res.json([]);
-	});
+    var search = req.query.search;
+    db.select({name:new RegExp(search,"i")},function(data) {
+        res.json(data.map(function(a) {
+            return a.name;
+        }));
+    },function(err) {
+        res.json([]);
+    });
 });
 app.listen(process.env.PORT || 3000);

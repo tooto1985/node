@@ -1,8 +1,9 @@
 var express = require("express");
 var app = express();
 app.get("/", function(req, res) {
-    res.send("GET!");
+    res.send("<h1>Node.JS!</h1>");
 });
+
 
 
 

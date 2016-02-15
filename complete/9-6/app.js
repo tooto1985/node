@@ -41,7 +41,7 @@ app.get("/list",function(req,res){
             if (age) {
                 age = parseInt(age);
                 filter = {age:{$gte:age}};
-            }   
+            }
             db.collection("users").find(filter).toArray(function(err,data) {
                 if (!err) {
                     res.render("list",{data:data,query:req.query});

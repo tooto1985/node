@@ -1,11 +1,10 @@
 var http = require("http");
 http.createServer(function(request, response) {
-    var html, contentType;
+    var html="", contentType="";
     var statusCode = 200;
-    switch (request.url) {
-        case "/":
-            contentType = "text/html";
-            html = `<html>
+    if (request.url === "/") {
+        contentType = "text/html";
+        html = `<html>
 <head>
 <link type="text/css" rel="stylesheet" href="index.css">
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -15,26 +14,22 @@ http.createServer(function(request, response) {
     <div>請按我!</div>
 </body>
 </html>`;
-            break;
-        case "/index.css":
-            contentType = "text/css";
-            html = `div {
+    } else if (request.url === "/index.css") {
+        contentType = "text/css";
+        html = `div {
     color:green;
     font-size:50px;
     cursor:pointer;
 }`;
-            break;
-        case "/index.js":
-            contentType = "application/x-javascript";
-            html = `$(function() {
+    } else if (request.url === "/index.js") {
+        contentType = "application/x-javascript";
+        html = `$(function() {
     $("div").click(function() {
         alert("我被按下了!");
     });
 });`;
-            break;
-        default:
-            statusCode = 404;
-            break;
+    } else {
+        statusCode = 404;
     }
     if (statusCode === 404) {
         response.writeHead(404);
