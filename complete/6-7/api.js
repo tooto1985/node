@@ -9,13 +9,17 @@ module.exports = function(request, response) {
         form.on('file', function(field, file) {
             fs.renameSync(file.path, "./upload/" + file.name);
         });
+        form.on("field", function(field, value) {
+            request.body = request.body || {};
+            request.body[field] = value;
+        });
         form.on('end', function() {
             response.writeHead(200,{
-                "Content-Type":"text/html"
+                "Content-Type":"text/html; charset=utf-8"
             });
-            response.write("上傳成功");
+            response.write("上傳成功，收到訊息：" + request.body.content);
             response.end();
         });
         form.parse(request);
     }
-}
+};

@@ -5,7 +5,7 @@ module.exports = function(request, response) {
     var query = url.parse(request.url, true).query;
     if (pathname === "/api/") {
         if (!number) {
-            number = ~~(Math.random() * 10000);
+            number = ~~(Math.random() * 100);
         }
         var num = query.num || 0;
         var output = {};
@@ -16,12 +16,12 @@ module.exports = function(request, response) {
         } else {
             output.message = "恭喜猜中是" + num + "了";
             output.success = true;
-            number = ~~(Math.random() * 10000);
+            number = ~~(Math.random() * 100);
         }
         response.writeHead(200,{
-            "Content-Type": "application/json"
+            "Content-Type": "application/json; charset=utf-8"
         });
         response.write(JSON.stringify(output));
         response.end();
     }
-}
+};
