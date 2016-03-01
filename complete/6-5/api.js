@@ -10,7 +10,7 @@ module.exports = function(request, response) {
         request.on("end", function() {
             var user = querystring.parse(postdata);
             console.log("username=>" + user.username + ",password=>" + user.password);
-            response.write("ok");
+            response.write("login...");
             response.end();
         });
     }
