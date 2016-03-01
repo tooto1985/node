@@ -22,6 +22,7 @@ http.createServer(function(request, response) {
         if (fs.statSync(pathname).isFile()) {
             response.writeHead(200, {
                 "Content-Type": mime.lookup(pathname)
+                
             });
             response.write(fs.readFileSync(pathname));
             response.end();

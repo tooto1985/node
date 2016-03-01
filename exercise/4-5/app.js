@@ -5,6 +5,7 @@ http.createServer(function(request, response) {
     });
     var html = `<html>
 <head>
+<meta charset="UTF-8">
 <style>
     div {
         color:green;

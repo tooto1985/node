@@ -5,6 +5,7 @@ http.createServer(function(request, response) {
         contentType = "text/html";
         html = `<html>
 <head>
+<meta charset="UTF-8">
 <link type="text/css" rel="stylesheet" href="index.css">
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="index.js"></script>

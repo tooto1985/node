@@ -2,7 +2,7 @@ var http = require("http");
 http.createServer(function(request, response) {
 
 
-    response.write("Node.JS!");
+    response.write("你好Node.JS!");
 
 
     response.end();
