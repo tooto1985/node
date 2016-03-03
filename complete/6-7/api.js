@@ -6,14 +6,14 @@ module.exports = function(request, response) {
     if (pathname === "/api/upload/" && request.method === "POST") {
         var form = new formidable.IncomingForm();
         form.uploadDir = "./upload/";
-        form.on('file', function(field, file) {
+        form.on("file", function(field, file) {
             fs.renameSync(file.path, "./upload/" + file.name);
         });
         form.on("field", function(field, value) {
             request.body = request.body || {};
             request.body[field] = value;
         });
-        form.on('end', function() {
+        form.on("end", function() {
             response.writeHead(200,{
                 "Content-Type":"text/html; charset=utf-8"
             });
