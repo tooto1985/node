@@ -1,4 +1,4 @@
-var mongodbUri = "mongodb://127.0.0.1/local";
+var mongodbUri = "mongodb://username:password@127.0.0.1:27017/local?authSource=admin";
 var collectionName = "users";
 var Db = require("./db");
 var db = new Db(mongodbUri,collectionName);

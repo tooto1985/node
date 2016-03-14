@@ -1,7 +1,7 @@
-
-
-
-
+var mongodbUri = "mongodb://username:password@127.0.0.1:27017/mydb?authSource=admin";
+var collectionName = "users";
+var Db = require("./db");
+var db = new Db(mongodbUri,collectionName);
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
