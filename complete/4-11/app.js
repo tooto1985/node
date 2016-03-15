@@ -21,8 +21,7 @@ http.createServer(function(request, response) {
     try {
         if (fs.statSync(pathname).isFile()) {
             response.writeHead(200, {
-                "Content-Type": mime.lookup(pathname),
-                "Cache-Control": "max-age=600"
+                "Content-Type": mime.lookup(pathname)
             });
             response.write(fs.readFileSync(pathname));
             response.end();
