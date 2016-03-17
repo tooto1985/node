@@ -1,27 +1,40 @@
 {
   "name": "node",
   "version": "1.0.0",
-  "description": "",
+  "description": "NodeJS-Example",
+  "main": "index.js",
   "dependencies": {
-    "async": "^1.5.0",
-    "body-parser": "^1.14.2",
-    "colors": "^1.1.2",
-    "cookie-parser": "^1.3.5",
+    "async": "^1.5.2",
     "cookies": "^0.5.1",
+    "colors": "^1.1.2",
+    "cookie-parser": "^1.4.1",
+    "body-parser": "^1.15.0",
     "debug": "^2.2.0",
-    "ejs": "^2.3.4",
-    "express": "^4.13.3",
-    "express-session": "^1.12.1",
+    "ejs": "^2.4.1",
+    "express-session": "^1.13.0",
+    "express": "^4.13.4",
     "formidable": "^1.0.17",
-    "http-proxy": "^1.12.0",
+    "http-proxy": "^1.13.2",
+    "jsdom": "^8.1.0",
     "mime": "^1.3.4",
-    "mongodb": "^2.0.49",
-    "morgan": "^1.6.1",
-    "multer": "^1.1.0",
+    "mongodb": "^2.1.7",
     "serve-favicon": "^2.3.0",
-    "socket.io": "^1.4.5"
+    "socket.io": "^1.4.5",
+    "multer": "^1.1.0",
+    "morgan": "^1.7.0"
   },
   "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tooto1985/node.git"
+  },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tooto1985/node/issues"
+  },
+  "homepage": "https://github.com/tooto1985/node#readme"
 }
