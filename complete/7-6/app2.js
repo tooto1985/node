@@ -7,4 +7,4 @@ app.get("/:area", function(req, res) {
         res.send("<table><tr>" + $("th:contains('" + req.params.area + "')").parent().html() + "</tr></table>");
     });
 });
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
