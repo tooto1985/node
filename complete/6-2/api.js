@@ -3,7 +3,7 @@ module.exports = function(request, response) {
     var pathname = url.parse(request.url).pathname;
     if (pathname === "/api/") {
         response.writeHead(200,{
-            "Content-Type":"application/json"
+            "Content-Type":"application/json; charset=utf-8"
         });
         response.write(JSON.stringify([
             [
@@ -23,7 +23,7 @@ module.exports = function(request, response) {
     }
     if(pathname === "/api/tips/") {
         response.writeHead(200,{
-            "Content-Type":"application/json"
+            "Content-Type":"application/json; charset=utf-8"
         });
         var tips=[
             "隨機顯示提示訊息",
@@ -34,4 +34,4 @@ module.exports = function(request, response) {
         response.write(JSON.stringify(tip));
         response.end();
     }
-}
+};

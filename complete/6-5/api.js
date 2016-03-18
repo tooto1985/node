@@ -1,4 +1,3 @@
-var util = require("util");
 var url = require("url");
 var querystring = require("querystring");
 module.exports = function(request, response) {
@@ -9,9 +8,10 @@ module.exports = function(request, response) {
             postdata += data;
         });
         request.on("end", function() {
-            console.log(postdata + " => " + util.inspect(querystring.parse(postdata)));
-            response.write("ok");
+            var user = querystring.parse(postdata);
+            console.log("username=>" + user.username + ",password=>" + user.password);
+            response.write("login...");
             response.end();
         });
     }
-}
+};

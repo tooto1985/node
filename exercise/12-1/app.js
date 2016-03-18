@@ -7,4 +7,5 @@ http.createServer(function(request, response) {
         "api": "data"
     }));
     response.end();
-}).listen(process.env.PORT || 3000);
+}).listen(3000);
+
