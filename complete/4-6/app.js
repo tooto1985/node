@@ -19,7 +19,7 @@ http.createServer(function(request, response) {
         response.writeHead(404);
         response.write("404 not found");
     } else {
-        response.writeHead(statusCode, {
+        response.writeHead(200, {
             "Content-Type": contentType
         });
         response.write(content);
