@@ -1,34 +1,17 @@
 var http = require("http");
+var fs = require("fs");
 http.createServer(function(request, response) {
-    var html="", contentType="";
+    var content="", contentType="";
     var statusCode = 200;
     if (request.url === "/") {
         contentType = "text/html";
-        html = `<html>
-<head>
-<meta charset="UTF-8">
-<link type="text/css" rel="stylesheet" href="index.css">
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="index.js"></script>
-</head>
-<body>
-    <div>請按我!</div>
-</body>
-</html>`;
+        content = fs.readFileSync("index.html");
     } else if (request.url === "/index.css") {
         contentType = "text/css";
-        html = `div {
-    color:green;
-    font-size:50px;
-    cursor:pointer;
-}`;
+        content = fs.readFileSync("index.css");
     } else if (request.url === "/index.js") {
         contentType = "application/x-javascript";
-        html = `$(function() {
-    $("div").click(function() {
-        alert("我被按下了!");
-    });
-});`;
+        content = fs.readFileSync("index.js");
     } else {
         statusCode = 404;
     }
@@ -39,7 +22,7 @@ http.createServer(function(request, response) {
         response.writeHead(statusCode, {
             "Content-Type": contentType
         });
-        response.write(html);
+        response.write(content);
     }
     response.end();
 }).listen(process.env.PORT || 3000);
