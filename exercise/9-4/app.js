@@ -16,7 +16,7 @@ app.post("/send", function(req, res) {
     if (!username || !email || !age) {
         res.render("message", {message: "請填寫完整資料喔！"});
     } else {
-        MongoClient.connect("mongodb://username:password@127.0.0.1:27017/mydb?authSource=admin", function(err, db) {
+        MongoClient.connect("mongodb://username:password@127.0.0.1/mydb?authSource=admin", function(err, db) {
             if (!err) {
 
 
