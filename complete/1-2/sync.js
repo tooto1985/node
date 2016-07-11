@@ -1,7 +1,6 @@
-console.log("step1:start");
+console.log(1);
+run(console.log(2));
 function run() {
-    console.log("step3:do run function");
+    console.log(3);
 }
-console.log("step2:call run function");
-run();
-console.log("step4:end");
+console.log(4);

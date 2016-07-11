@@ -1,7 +1,6 @@
 function run(a, b, callback) {
-    console.log("please wait...")
+    console.log("please wait...");
     setTimeout(function() {
-        console.log("completed !");
         callback(a + b);
     }, 1000);
 }

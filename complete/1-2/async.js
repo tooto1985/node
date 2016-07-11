@@ -1,6 +1,6 @@
-console.log("step1:start");
-console.log("step2:async run function");
-setTimeout(function run() {
-    console.log("step4:do run function");
-},0);
-console.log("step3:end");
+console.log(1);
+setTimeout(run.bind(console.log(2)));
+function run() {
+    console.log(3);
+}
+console.log(4);
