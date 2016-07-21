@@ -1,0 +1,4 @@
+{
+  "shell":true,
+  "shell_cmd":"taskkill /f /im node.exe & node \"$file\""
+}
