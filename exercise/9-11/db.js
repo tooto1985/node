@@ -2,7 +2,8 @@ var async = require("async");
 var MongoClient = require("mongodb").MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var cache = null;
-module.exports = function(mongodbUri,collectionName) {
+module.exports = function(mongodbUri,collectionName,serverVision) {
+    serverVision = serverVision || "3.2";
     function asyncrun(callback) {
         async.waterfall([
             function(next) {
@@ -45,6 +46,9 @@ module.exports = function(mongodbUri,collectionName) {
                     filter = {};
                 }
                 var q = dbc.find(filter);
+                if (serverVision>="3.2" && filter.$orderby) {
+                    q = q.sort(filter.$orderby);
+                }
                 if (fetch) {
                     q = q.limit(fetch);
                 }
