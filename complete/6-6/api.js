@@ -3,12 +3,13 @@ var querystring = require("querystring");
 module.exports = function(request, response) {
     var pathname = url.parse(request.url).pathname;
     if (pathname === "/api/login/" && request.method === "POST") {
-        var postdata = "";
-        request.on("data", function(data) {
-            postdata += data;
+        var body = [];
+        request.on("data", function(chunk) {
+            body.push(chunk);
         });
         request.on("end", function() {
-            request.body = querystring.parse(postdata);
+            body = Buffer.concat(body).toString();
+            request.body = querystring.parse(body);
             response.writeHead(200,{
                 "Content-Type":"text/html; charset=utf-8"
             });

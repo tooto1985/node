@@ -3,12 +3,13 @@ var querystring = require("querystring");
 module.exports = function(request, response) {
     var pathname = url.parse(request.url).pathname;
     if (pathname === "/api/login/" && request.method === "POST") {
-        var postdata = "";
-        request.on("data", function(data) {
-            postdata += data;
+        var body = [];
+        request.on("data", function(chunk) {
+            body.push(chunk);
         });
         request.on("end", function() {
-            var user = querystring.parse(postdata);
+            body = Buffer.concat(body).toString();
+            var user = querystring.parse(body);
             console.log("username=>" + user.username + ",password=>" + user.password);
             response.write("login...");
             response.end();
