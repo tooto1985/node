@@ -5,11 +5,12 @@ app.get("/", function(req, res) {
     var url = req.query.url;
     if (url) {
         http.get(url, function(response) {
-            var body = "";
-            response.on("data", function(data) {
-                body += data;
+            var body = [];
+            response.on("data", function(chunk) {
+                body.push(chunk);
             });
             response.on("end", function() {
+                body = Buffer.concat(body).toString();
                 res.jsonp(JSON.parse(body));
             });
         }).on("error",function() {
