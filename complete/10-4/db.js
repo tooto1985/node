@@ -1,13 +1,13 @@
 var async = require("async");
 var MongoClient = require("mongodb").MongoClient;
 var ObjectId = require('mongodb').ObjectID;
-var cache = null;
-module.exports = function(mongodbUri,collectionName,serverVersion) {
-    serverVersion = serverVersion || "3.2";
+module.exports = function(mongodbUri,collectionName) {
+    var cache;
+    var serverVersion;
     function asyncrun(callback) {
         async.waterfall([
             function(next) {
-                if (cache === null) {
+                if (!cache) {
                     MongoClient.connect(mongodbUri, function(err, db) {
                         if (!err) {
                             cache = db;
@@ -18,6 +18,20 @@ module.exports = function(mongodbUri,collectionName,serverVersion) {
                     });
                 } else {
                     next(null,cache);
+                }
+            },
+            function(db, next) {
+                if (!serverVersion) {
+                    db.admin().serverStatus(function(err, info) {
+                        if (!err) {
+                            serverVersion = info.version;
+                            next(null, db);
+                        } else {
+                            next(err, null);
+                        }
+                    });
+                } else {
+                    next(null, db);
                 }
             }
         ],function(err,db) {
