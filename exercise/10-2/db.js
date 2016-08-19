@@ -56,15 +56,22 @@ module.exports = function(mongodbUri,collectionName) {
     this.select = function(filter,success,error,fetch) {
         asyncrun(function(err,dbc) {
             if (!err) {
-                if (!filter) {
-                    filter = {};
-                }
-                var q = dbc.find(filter);
-                if (serverVersion>="3.2" && filter.$orderby) {
-                    q = q.sort(filter.$orderby);
-                }
-                if (fetch) {
-                    q = q.limit(fetch);
+                if (typeof filter === "object") {
+                    if (!filter) {
+                        filter = {};
+                    }
+                    var q = dbc.find(filter);
+                    if (serverVersion>="3.2" && filter.$orderby) {
+                        q = q.sort(filter.$orderby);
+                    }
+                    if (fetch) {
+                        q = q.limit(fetch);
+                    }
+                } else if (typeof filter === "function") {
+                    q = filter(dbc);
+                } else {
+                    if (error) error("filter is not object or function");
+                    return;
                 }
                 q.toArray(function(err,data) {
                     if (!err) {
