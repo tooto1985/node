@@ -15,7 +15,7 @@ app.get("/", function(req, res) {
 app.post("/upload", uploading.any(), function(req, res) {
     for (var i = 0; i < req.files.length; i++) {
         var file = req.files[i];
-        fs.renameSync(file.path, file.path.replace(file.filename, file.originalname));
+        fs.renameSync(file.path, "./upload/" + file.originalname);
     }
     res.send("ok:" + req.body.message);
 });

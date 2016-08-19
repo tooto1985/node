@@ -1,12 +1,13 @@
 var async = require("async");
 var MongoClient = require("mongodb").MongoClient;
 var ObjectId = require('mongodb').ObjectID;
-var cache = null;
 module.exports = function(mongodbUri,collectionName) {
+    var cache;
+    var serverVersion;
     function asyncrun(callback) {
         async.waterfall([
             function(next) {
-                if (cache === null) {
+                if (!cache) {
                     MongoClient.connect(mongodbUri, function(err, db) {
                         if (!err) {
                             cache = db;
@@ -17,6 +18,20 @@ module.exports = function(mongodbUri,collectionName) {
                     });
                 } else {
                     next(null,cache);
+                }
+            },
+            function(db, next) {
+                if (!serverVersion) {
+                    db.admin().serverStatus(function(err, info) {
+                        if (!err) {
+                            serverVersion = info.version;
+                            next(null, db);
+                        } else {
+                            next(err, null);
+                        }
+                    });
+                } else {
+                    next(null, db);
                 }
             }
         ],function(err,db) {
@@ -41,12 +56,22 @@ module.exports = function(mongodbUri,collectionName) {
     this.select = function(filter,success,error,fetch) {
         asyncrun(function(err,dbc) {
             if (!err) {
-                if (!filter) {
-                    filter = {};
-                }
-                var q = dbc.find(filter);
-                if (fetch) {
-                    q = q.limit(fetch);
+                if (typeof filter === "object") {
+                    if (!filter) {
+                        filter = {};
+                    }
+                    var q = dbc.find(filter);
+                    if (serverVersion>="3.2" && filter.$orderby) {
+                        q = q.sort(filter.$orderby);
+                    }
+                    if (fetch) {
+                        q = q.limit(fetch);
+                    }
+                } else if (typeof filter === "function") {
+                    q = filter(dbc);
+                } else {
+                    if (error) error("filter is not object or function");
+                    return;
                 }
                 q.toArray(function(err,data) {
                     if (!err) {
@@ -63,7 +88,10 @@ module.exports = function(mongodbUri,collectionName) {
     this.update = function(id,updateObject,success,error) {
         asyncrun(function(err,dbc) {
             if (!err) {
-                dbc.update({_id: new ObjectId(id)},{$set:updateObject},function(err,data) {
+                if (!updateObject.$set && !updateObject.$unset) {
+                    updateObject = {$set:updateObject};
+                }
+                dbc.update({_id: new ObjectId(id)},updateObject,function(err,data) {
                     if (!err) {
                         if (success) success(data);
                     } else {

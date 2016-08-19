@@ -5,7 +5,8 @@ var app = express();
 var session = require("express-session");
 app.use(session({
     secret: "abcabcabcabc",
-    cookie: {maxAge: new Date(Date.now() + (60 * 1000 * 30))}
+    cookie: {maxAge: 60 * 1000 * 30},
+    rolling: true
 }));
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/add", function(req, res) {

@@ -73,21 +73,21 @@ app.get("/delete/:id",function(req,res) {
 app.listen(process.env.PORT || 3000);
 var mongodbUri = "mongodb://username:password@127.0.0.1/mydb?authSource=admin";
 var collectionName = "users";
-function asyncrun(callback) {
-    async.waterfall([
-        function(next) {
-            MongoClient.connect(mongodbUri, function(err, db) {
-                if (!err) {
-                    next(null,db);
-                } else {
-                    next(err,null);
-                }
-            });
-        }
-    ],function(err,db) {
-        callback(err,db.collection(collectionName));
-    });
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function insert(insertObject,success,error) {
     asyncrun(function(err,dbc) {
         if (!err) {
