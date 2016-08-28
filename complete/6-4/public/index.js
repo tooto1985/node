@@ -1,4 +1,5 @@
 ﻿$(function() {
+    var i = 0;
     $("#num").keyup(function(e) {
         if (e.keyCode === 13) {
             var value = parseInt($(this).val());
@@ -14,9 +15,11 @@
                         return (value + 1) + "~" + oldtext.split("~")[1];
                     });
                 }
+                i++;
                 if (data.success) {
-                    alert("恭喜猜中了是" + value);
+                    alert("恭喜猜中了是" + value + "，共猜了" + i + "次");
                     $("span").text("0~99");
+                    i = 0;
                 }
                 $("#num").val("");
             });
