@@ -1,0 +1,11 @@
+body {
+    background-color: lightgray;
+}
+h2 {
+    text-align:center;
+}
+#num {
+    margin:0 auto;
+    display: block;
+    text-align: center;
+}
