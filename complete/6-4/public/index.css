@@ -1,11 +1,17 @@
 body {
-    background-color: lightgray;
+    background-image: url(images/bg.jpg);
+    background-size: cover;
 }
-h2 {
-    text-align:center;
+
+div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -110px;
+    margin-top: -50px;
+    text-align: center;
 }
+
 #num {
-    margin:0 auto;
-    display: block;
     text-align: center;
 }
