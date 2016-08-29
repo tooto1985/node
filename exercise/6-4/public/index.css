@@ -1,0 +1,17 @@
+body {
+    background-image: url(images/bg.jpg);
+    background-size: cover;
+}
+
+div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -110px;
+    margin-top: -50px;
+    text-align: center;
+}
+
+#num {
+    text-align: center;
+}

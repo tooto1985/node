@@ -10,7 +10,7 @@ module.exports = function(request, response) {
         request.on("end", function() {
             body = Buffer.concat(body).toString();
             var user = querystring.parse(body);
-            console.log("username=>" + user.username + ",password=>" + user.password);
+            console.log(user);
             response.write("login...");
             response.end();
         });
