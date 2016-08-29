@@ -3,17 +3,20 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Document</title>
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"
-        rel="stylesheet" type="text/css" />
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<h2>檔案上傳</h2>
-    <form action="/api/upload/" method="post" enctype="multipart/form-data">
-        檔案：<input type="file" name="uploadfile" multiple><br>
-        說明：<input type="text" name="content"><br>
-        <input type="submit" value="確定">
-    </form>
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <h2>檔案上傳</h2>
+            <form action="/api/upload/" method="post" enctype="multipart/form-data">
+                檔案：<input type="file" name="uploadfile" multiple><br>
+                說明：<input type="text" name="content"><br>
+                <input type="submit" value="確定">
+            </form>
+        </div>
+    </div>
 </body>
 </html>
