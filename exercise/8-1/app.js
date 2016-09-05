@@ -1,21 +1,7 @@
 var http = require("http");
-var url = require("url");
-
+var api = require("./api");
+var static = require("./static");
 http.createServer(function(request, response) {
-
-
-
-
-
-
-
-
-
-
-
-    response.writeHead(200, {
-        "Content-Type": "text/html"
-    });
-    response.write("myname=" + myname);
-    response.end();
+    api(request, response);
+    static(request, response);
 }).listen(process.env.PORT || 3000);
