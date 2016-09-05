@@ -375,7 +375,7 @@ main {
   font-size: 50px;
   width: 100%;
   text-align: center;
-  height: 100%;
+  background-color: rgba(0,0,0,0.5);
 }
 
 @media only screen and (min-width: 768px) {

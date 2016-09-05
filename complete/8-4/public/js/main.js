@@ -119,8 +119,8 @@ $(function() {
         var html = "";
         for (var i = 0; i < data.length; i++) {
             html += "<li>";
-            html += "<img src=\"img/thumb.jpg\">";
-            html += "<a href=\"#\" title=\"$" + data[i].price + "\">" + data[i].name + "</a>";
+            html += "<img title=\"$" + data[i].price + "\" src=\"" + ( data[i].img || "img/thumb.jpg") + "\">";
+            html += "<a href=\"#\">" + data[i].name + "</a>";
             html += "</li>";
         }
         $("#cd-gallery-items").html(html);
