@@ -1,7 +1,6 @@
-@import url(http://fonts.googleapis.com/css?family=Tenor+Sans);
 html {
     background-color: #5D92BA;
-    font-family: "Tenor Sans", sans-serif;
+    font-family: sans-serif;
 }
 .container {
     width: 500px;
@@ -13,7 +12,7 @@ html {
     width: 450px;
 }
 .login-heading {
-    font: 1.8em/48px "Tenor Sans", sans-serif;
+    font: 1.8em/48px sans-serif;
     color: white;
 }
 .input-txt {
