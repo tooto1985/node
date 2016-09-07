@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<h1>會員登入</h1>
-	<form action="/" method="POST">
-		<div>
-			<span>帳號：</span>
-			<input type="text" name="userid">
-		</div>
-		<div>
-			<span>密碼：</span>
-			<input type="password" name="password">
-		</div>
-		<div>
-			<input type="submit" value="確定">
-			<input type="reset" value="清除">
-		</div>
-	</form>
+    <div class="container">
+        <div class="login">
+            <h1 class="login-heading">
+                <strong>Welcome.</strong>
+                <span>Please login.</span>
+            </h1>
+            <form action="/" method="post">
+                <input type="text" name="userid" placeholder="Username" required="required" class="input-txt" />
+                <input type="password" name="password" placeholder="Password" required="required" class="input-txt" />
+                <div class="login-footer">
+                    <button type="submit" class="btn btn--right">Sign in</button>
+                    <span style="float:right;width:10px;height:45px;"></span>
+                    <button type="button" class="btn btn--right" onclick="history.back();">Back</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

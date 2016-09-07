@@ -1,11 +1,10 @@
-@import url(http://fonts.googleapis.com/css?family=Raleway);
 body {
   margin: 0px;
 }
 nav {
   padding: 24px;
   text-align: center;
-  font-family: Raleway;
+  font-family: sans-serif;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
 #nav-1 {
