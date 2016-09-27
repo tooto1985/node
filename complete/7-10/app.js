@@ -5,7 +5,7 @@ var fs = require("fs");
 var path = require("path");
 var app = express();
 var uploading = multer({
-    dest: __dirname + "/upload",
+    dest: __dirname + "/upload"
 });
 app.use(bodyParser());
 app.use(express.static(path.join(__dirname, "public")));
