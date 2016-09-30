@@ -8,19 +8,27 @@ http.createServer(function(request, response) {
         pathname += "index.html"; //若無帶入檔名預設為index.html
     }
     pathname = (process.argv[2] || ".") + pathname; //若有傳入參數則使用參數的路徑
-    try {
-        if (fs.statSync(pathname).isFile()) {
-            response.writeHead(200, {
-                "Content-Type": mime.lookup(pathname)
-            });
-            response.write(fs.readFileSync(pathname));
-            response.end();
+    fs.stat(pathname, function(err,stats) {
+        if (!err) {
+            if (stats.isFile()) {
+                response.writeHead(200, {
+                    "Content-Type": mime.lookup(pathname)
+                });
+                fs.readFile(pathname, function(err, data) {
+                    if (!err) {
+                        response.write(data);
+                    } else {
+                        console.log(err);
+                    }
+                    response.end();
+                });
+            } else {
+                notFound(); 
+            }
         } else {
             notFound();
         }
-    } catch (e) {
-        notFound();
-    }
+    });
     function notFound() {
         response.writeHead(404);
         response.write("404 not found");
