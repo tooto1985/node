@@ -7,21 +7,27 @@ http.createServer(function(request, response) {
     var routes = {
         "/": function() {
             contentType = "text/html";
-            return fs.readFileSync("./index.html");
+            return "./index.html";
         },
         "/index.css": function() {
             contentType = "text/css";
-            return fs.readFileSync("./index.css");
+            return "./index.css";
         },
         "/index.js": function() {
             contentType = "application/x-javascript";
-            return fs.readFileSync("./index.js");
+            return "./index.js";
         },
         "/index.png": function() {
             contentType = "image/png";
-            return fs.readFileSync("./index.png");
+            return "./index.png";
         }
     };
+
+
+
+
+
+
 
 
 

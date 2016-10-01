@@ -4,6 +4,12 @@ http.createServer(function(request, response) {
     response.writeHead(200, {
         "Content-Type": "text/html"
     });
-    response.write(fs.readFileSync("index.html"));
-    response.end();
+    fs.readFile("index.html", function(err, data) {
+        if (!err) {
+            response.write(data);
+        } else {
+            console.log(err);
+        }
+        response.end();
+    });
 }).listen(process.env.PORT || 3000);

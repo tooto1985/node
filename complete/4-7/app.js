@@ -7,28 +7,34 @@ http.createServer(function(request, response) {
     var routes = {
         "/": function() {
             contentType = "text/html";
-            return fs.readFileSync("./index.html");
+            return "./index.html";
         },
         "/index.css": function() {
             contentType = "text/css";
-            return fs.readFileSync("./index.css");
+            return "./index.css";
         },
         "/index.js": function() {
             contentType = "application/x-javascript";
-            return fs.readFileSync("./index.js");
+            return "./index.js";
         },
         "/index.png": function() {
             contentType = "image/png";
-            return fs.readFileSync("./index.png");
+            return "./index.png";
         }
     };
     if (typeof routes[pathname] === "function") {
-        var data = routes[pathname]();
+        var content = routes[pathname]();
         response.writeHead(200, {
             "Content-Type": contentType
         });
-        response.write(data);
-        response.end();
+        fs.readFile(content, function(err, data) {
+            if (!err) {
+                response.write(data);
+            } else {
+                console.log(err);
+            }
+            response.end();
+        });
     } else {
         response.writeHead(404);
         response.write("404 not found");

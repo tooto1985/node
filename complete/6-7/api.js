@@ -7,7 +7,7 @@ module.exports = function(request, response) {
         var form = new formidable.IncomingForm();
         form.uploadDir = "./upload/";
         form.on("file", function(field, file) {
-            fs.renameSync(file.path, "./upload/" + file.name);
+            fs.rename(file.path, "./upload/" + file.name);
         });
         form.on("field", function(field, value) {
             request.body = request.body || {};
