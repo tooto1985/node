@@ -5,14 +5,15 @@ http.createServer(function(request, response) {
 
     if (request.url === "/") {
         contentType = "text/html";
-        content = fs.readFileSync("index.html");
+        content = "index.html";
     } else if (request.url === "/index.css") {
         contentType = "text/css";
-        content = fs.readFileSync("index.css");
+        content = "index.css";
     } else if (request.url === "/index.js") {
         contentType = "application/x-javascript";
-        content = fs.readFileSync("index.js");
+        content = "index.js";
     }
+
 
 
 
@@ -22,7 +23,13 @@ http.createServer(function(request, response) {
         response.writeHead(200, {
             "Content-Type": contentType
         });
-        response.write(content);
-    
-    response.end();
+        fs.readFile(content, function(err, data) {
+            if (!err) {
+                response.write(data);
+            } else {
+                console.log(err);
+            }
+            response.end();
+        });
+
 }).listen(process.env.PORT || 3000);
