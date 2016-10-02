@@ -1,2 +1,2 @@
-var colors=require("colors");
-console.log("Text ".green.bgRed+" Color!".red.bgGreen);
+var colors = require("colors");
+console.log("%s%s", "Text ".green.bgRed, " Color!".red.bgGreen);

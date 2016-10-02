@@ -10,11 +10,10 @@ module.exports = function(request, response) {
         var num = query.num || 0;
         var output = {};
         if (num > number) {
-            output.message = "比" + num + "小";
+            output.result = "down";
         } else if (num < number) {
-            output.message = "比" + num + "大";
+            output.result = "up";
         } else {
-            output.message = "恭喜猜中是" + num + "了";
             output.success = true;
             number = ~~(Math.random() * 100);
         }

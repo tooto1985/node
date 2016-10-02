@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<h1><%=message%></h1>
-	<button onclick="history.back();">回上一頁</button>
+    <div class="container">
+        <div class="login">
+            <h1 class="login-heading">
+                <strong>Error.</strong>
+                <span><%=message%></span>
+            </h1>
+            <button type="button" class="btn" onclick="history.back();">Back</button>
+        </div>
+    </div>
 </body>
 </html>

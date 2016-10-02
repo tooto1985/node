@@ -56,7 +56,7 @@ module.exports = function(mongodbUri,collectionName) {
     this.select = function(filter,success,error,fetch) {
         asyncrun(function(err,dbc) {
             if (!err) {
-                if (typeof filter === "object") {
+                if (typeof filter !== "function") {
                     if (!filter) {
                         filter = {};
                     }
@@ -67,11 +67,8 @@ module.exports = function(mongodbUri,collectionName) {
                     if (fetch) {
                         q = q.limit(fetch);
                     }
-                } else if (typeof filter === "function") {
-                    q = filter(dbc);
                 } else {
-                    if (error) error("filter is not object or function");
-                    return;
+                    q = filter(dbc);
                 }
                 q.toArray(function(err,data) {
                     if (!err) {

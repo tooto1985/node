@@ -1,0 +1,11 @@
+.txt {
+    text-align: center;
+    z-index: 1;
+    position: relative;
+}
+
+.bar {
+    width: 20%;
+    position: relative;
+    margin-top: -20px;
+}

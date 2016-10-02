@@ -1,17 +1,20 @@
 var express = require("express");
-var app = express();
+var path = require("path");
 var cookieParser = require("cookie-parser");
+var app = express();
+app.set("view engine", "ejs");
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
 app.get("/", function(req, res) {
-    var myname = "";
-    if (req.query.myname) {
-        res.cookie("myname", req.query.myname);
-        myname = req.query.myname;
+    var theme = "1";
+    if (req.query.theme) {
+        res.cookie("theme", req.query.theme);
+        theme = req.query.theme;
     } else {
-        if (req.cookies.myname) {
-            myname = req.cookies.myname;
+        if (req.cookies.theme) {
+            theme = req.cookies.theme;
         }
     }
-    res.send("myname=" + myname);
+    res.render("index", {theme: theme});
 });
 app.listen(process.env.PORT || 3000);

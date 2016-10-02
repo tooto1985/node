@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<h1><%=(isLogin?"已登入":"未登入")%></h1>
-	<% if (!isLogin) { %>
-	<a href="login.html">請先登入</a>
-	<% } else { %>
-	<a href="logout">登出</a>
-	<% } %>
+    <div class="container">
+        <div class="login">
+            <h1 class="login-heading">
+                <strong>Welcome.</strong>
+                <span><%=(isLogin?"Signed":"Not signed")%>.</span>
+            </h1>
+            <% if (!isLogin) { %>
+            <button type="button" class="btn" onclick="location.href='/login.html';">Sign in</button>
+            <% } else { %>
+            <button type="button" class="btn" onclick="location.href='/logout';">Sign out</button>
+            <% } %>
+        </div>
+    </div>
 </body>
 </html>
