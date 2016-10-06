@@ -1,5 +1,5 @@
 ﻿$(function() {
-    var socket = io.connect();
+    var socket = io();
     function sendMessage(message) {
         var data = $("#name").val() + "說：" + message;
         socket.emit("send", data);
