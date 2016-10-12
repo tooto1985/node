@@ -11,6 +11,17 @@ http.createServer(function(request, response) {
 
 
 
+                response.writeHead(200, {
+                    "Content-Type":
+                });
+                fs.readFile(pathname, function(err, data) {
+                    if (!err) {
+                        response.write(data);
+                    } else {
+                        console.log(err);
+                    }
+                    response.end();
+                });
 
 
 
@@ -19,19 +30,8 @@ http.createServer(function(request, response) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        response.writeHead(404);
+        response.write("404 not found");
+        response.end();
 
 }).listen(process.env.PORT || 3000);

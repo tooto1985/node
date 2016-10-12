@@ -41,7 +41,7 @@ app.get("/list",function(req,res){
 
 
 
- 
+
             db.collection("users").find().toArray(function(err,data) {
                 if (!err) {
 
