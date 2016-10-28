@@ -9,10 +9,12 @@ app.use(express.static(path.join(__dirname,"public")));
 app.get("/api",function(req,res) {
     var num = parseInt(req.query.num);
     var fetch = parseInt(req.query.fetch);
-    db.select({$query:{num:{$gt:num}},$orderby:{num:1}},function(data){
+    db.select(function(dbc) {
+        return dbc.find({num:{$gt:num}}).sort({num:1}).limit(fetch);
+    },function(data){
         res.json(data);
     },function(err) {
         console.log(err);
-    },fetch);
+    });
 });
 app.listen(process.env.PORT || 3000);
