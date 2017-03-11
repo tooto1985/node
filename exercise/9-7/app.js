@@ -87,7 +87,7 @@ app.post("/edit",function(req,res) {
             if (!err) {
                 db.collection("users").update({},function(err,data) {
                     if (!err) {
-                        
+
                     } else {
                         res.render("message", {message: "寫入失敗！"});
                         console.log(err);

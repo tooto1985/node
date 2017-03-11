@@ -1,1 +1,1 @@
-console.log("My name is %s, I'm %s.","John",28);
+console.log("My name is %s, I'm %d.","John",28);

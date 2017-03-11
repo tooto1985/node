@@ -29,22 +29,22 @@ app.get("/list",function(req,res){
     if (age) {
         age = {age:{$gte:parseInt(age)}};
     }
-    
-    
-    
-    
-    
+
+
+
+
+
 });
 app.get("/edit/:id",function(req,res) {
     var id=req.params.id;
     if (id) {
         id = {_id: new ObjectId(id)};
     }
-    
-    
-    
-    
-    
+
+
+
+
+
 });
 app.post("/edit",function(req,res) {
     var id = req.body.id;
@@ -54,20 +54,20 @@ app.post("/edit",function(req,res) {
     if (!id || !username || !email || !age) {
         res.render("message", {message: "請填寫完整資料喔！"});
     } else {
-        
-        
-        
-        
-        
+
+
+
+
+
     }
 });
 app.get("/delete/:id",function(req,res) {
     var id = req.params.id;
-    
-    
-    
-    
-    
+
+
+
+
+
 });
 app.listen(process.env.PORT || 3000);
 var mongodbUri = "mongodb://username:password@127.0.0.1/mydb?authSource=admin";
