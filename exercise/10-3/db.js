@@ -1,45 +1,24 @@
-var async = require("async");
 var MongoClient = require("mongodb").MongoClient;
 var ObjectId = require('mongodb').ObjectID;
-module.exports = function(mongodbUri,collectionName) {
+module.exports = function(mongodbUri, collectionName) {
     var cache;
-    var serverVersion;
-    function asyncrun(callback) {
-        async.waterfall([
-            function(next) {
-                if (!cache) {
-                    MongoClient.connect(mongodbUri, function(err, db) {
-                        if (!err) {
-                            cache = db;
-                            next(null,cache);
-                        } else {
-                            next(err,null);
-                        }
-                    });
+
+    function connect(callback) {
+        if (!cache) {
+            MongoClient.connect(mongodbUri, function(err, db) {
+                if (!err) {
+                    cache = db;
+                    callback(null, cache.collection(collectionName));
                 } else {
-                    next(null,cache);
+                    callback(err, null);
                 }
-            },
-            function(db, next) {
-                if (!serverVersion) {
-                    db.admin().serverStatus(function(err, info) {
-                        if (!err) {
-                            serverVersion = info.version;
-                            next(null, db);
-                        } else {
-                            next(err, null);
-                        }
-                    });
-                } else {
-                    next(null, db);
-                }
-            }
-        ],function(err,db) {
-            callback(err,db && db.collection(collectionName));
-        });
+            });
+        } else {
+            callback(null, cache.collection(collectionName));
+        }
     }
-    this.insert = function(insertObject,success,error) {
-        asyncrun(function(err,dbc) {
+    this.insert = function(insertObject, success, error) {
+        connect(function(err, dbc) {
             if (!err) {
                 dbc.insert(insertObject, function(err, result) {
                     if (!err) {
@@ -53,24 +32,21 @@ module.exports = function(mongodbUri,collectionName) {
             }
         });
     }
-    this.select = function(filter,success,error,fetch) {
-        asyncrun(function(err,dbc) {
+    this.select = function(filter, success, error, fetch) {
+        connect(function(err, dbc) {
             if (!err) {
                 if (typeof filter !== "function") {
                     if (!filter) {
                         filter = {};
                     }
                     var q = dbc.find(filter);
-                    if (serverVersion>="3.2" && filter.$orderby) {
-                        q = q.sort(filter.$orderby);
-                    }
                     if (fetch) {
                         q = q.limit(fetch);
                     }
                 } else {
                     q = filter(dbc);
                 }
-                q.toArray(function(err,data) {
+                q.toArray(function(err, data) {
                     if (!err) {
                         if (success) success(data);
                     } else {
@@ -82,13 +58,13 @@ module.exports = function(mongodbUri,collectionName) {
             }
         });
     }
-    this.update = function(id,updateObject,success,error) {
-        asyncrun(function(err,dbc) {
+    this.update = function(id, updateObject, success, error) {
+        connect(function(err, dbc) {
             if (!err) {
                 if (!updateObject.$set && !updateObject.$unset) {
-                    updateObject = {$set:updateObject};
+                    updateObject = { $set: updateObject };
                 }
-                dbc.update({_id: new ObjectId(id)},updateObject,function(err,data) {
+                dbc.update({ _id: new ObjectId(id) }, updateObject, function(err, data) {
                     if (!err) {
                         if (success) success(data);
                     } else {
@@ -100,10 +76,10 @@ module.exports = function(mongodbUri,collectionName) {
             }
         });
     }
-    this.remove = function(id,success,error) {
-        asyncrun(function(err,dbc) {
+    this.remove = function(id, success, error) {
+        connect(function(err, dbc) {
             if (!err) {
-                dbc.remove({_id: new ObjectId(id)},function(err,data){
+                dbc.remove({ _id: new ObjectId(id) }, function(err, data) {
                     if (!err) {
                         if (success) success(data);
                     } else {
