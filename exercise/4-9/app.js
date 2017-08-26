@@ -4,7 +4,7 @@ var url = require("url");
 var mime = require("mime");
 http.createServer(function(request, response) {
     var pathname = url.parse(request.url).pathname;
-    if (pathname.substr(pathname.length - 1) === "/") {
+    if (pathname.endsWith("/")) {
         pathname += "index.html"; //若無帶入檔名預設為index.html
     }
     pathname = "." + pathname; //最前面補上一個點表示相對路徑
