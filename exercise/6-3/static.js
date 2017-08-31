@@ -4,7 +4,7 @@ var mime = require("mime");
 module.exports = function(request, response) {
     var pathname = url.parse(request.url).pathname;
     if (!response.finished && request.method !== "POST") {
-        if (pathname.substr(pathname.length - 1) === "/") {
+        if (pathname.endsWith("/")) {
             pathname += "index.html"; //若無帶入檔名預設為index.html
         } else {
             var paths = pathname.split("/").pop();

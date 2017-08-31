@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "啟動程式",
-            "program": "${workspaceRoot}\\${relativeFile}",
+            "program": "${workspaceRoot}/${relativeFile}",
             "cwd": "${fileDirname}"
         },
         {
