@@ -1,6 +1,13 @@
 var formidable = require("formidable");
 var url = require("url");
 var fs = require("fs");
+fs.stat("./upload/", function(err, stats) {
+    if(err) {
+        fs.mkdir("./upload/" , function() {
+            console.log("create upload folder.");
+        });
+    }
+});
 module.exports = function(request, response) {
     var pathname = url.parse(request.url).pathname;
     if (pathname === "/api/upload/" && request.method === "POST") {
