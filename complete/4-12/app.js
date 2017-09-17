@@ -30,7 +30,6 @@ http.createServer(function (request, response) {
                             response.end();
                             return;
                         }
-
                         response.writeHead(200, {
                             "Content-Type": mime.lookup(pathname),
                             "Etag": hash
