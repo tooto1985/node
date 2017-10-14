@@ -8,7 +8,7 @@ var session = require("express-session");
 var path = require("path");
 var app = express();
 app.set("view engine", "ejs");
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
     secret: "abcabcabcabc"
 }));
