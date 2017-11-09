@@ -7,7 +7,7 @@ var app = express();
 var uploading = multer({
     dest: __dirname + "/upload"
 });
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.post("/upload", uploading.any(), function(req, res) {
     for (var i = 0; i < req.files.length; i++) {

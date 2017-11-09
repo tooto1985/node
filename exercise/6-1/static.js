@@ -4,6 +4,7 @@
 
 
 
+
         if (pathname.endsWith("/")) {
             pathname += "index.html"; //若無帶入檔名預設為index.html
         } else {
@@ -21,11 +22,18 @@
         fs.stat(pathname, function(err,stats) {
             if (!err) {
                 if (stats.isFile()) {
-                    response.writeHead(200, {
-                        "Content-Type": mime.lookup(pathname)
-                    });
                     fs.readFile(pathname, function(err, data) {
                         if (!err) {
+                            var hash = crypto.createHash('sha1').update(data).digest('base64');
+                            if (request.headers['if-none-match'] == hash) {
+                                response.writeHead(304);
+                                response.end();
+                                return;
+                            }
+                            response.writeHead(200, {
+                                "Content-Type": mime.lookup(pathname),
+                                "Etag": hash
+                            });
                             response.write(data);
                         } else {
                             console.log(err);

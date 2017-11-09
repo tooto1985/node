@@ -2,7 +2,7 @@ var http = require("http");
 var fs = require("fs");
 var url = require("url");
 var mime = require("mime");
-var crypto = require("crypto");
+
 http.createServer(function (request, response) {
     var pathname = url.parse(request.url).pathname;
     if (pathname.endsWith("/")) {
@@ -24,15 +24,15 @@ http.createServer(function (request, response) {
             if (stats.isFile()) {
                 fs.readFile(pathname, function (err, data) {
                     if (!err) {
-                        var hash = crypto.createHash('sha1').update(data).digest('base64');
-                        if (request.headers['if-none-match'] == hash) {
-                            response.writeHead(304);
-                            response.end();
-                            return;
-                        }
+
+
+
+
+
+
                         response.writeHead(200, {
                             "Content-Type": mime.lookup(pathname),
-                            "Etag": hash
+
                         });
                         response.write(data);
                     } else {
