@@ -14,7 +14,7 @@ http.createServer(function(request, response) {
             return "./index.css";
         },
         "/index.js": function() {
-            contentType = "application/x-javascript";
+            contentType = "application/javascript";
             return "./index.js";
         },
         "/index.png": function() {
