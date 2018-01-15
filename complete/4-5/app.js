@@ -9,7 +9,7 @@ http.createServer(function(request, response) {
         contentType = "text/css";
         content = "index.css";
     } else if (request.url === "/index.js") {
-        contentType = "application/x-javascript";
+        contentType = "application/javascript";
         content = "index.js";
     }
     response.writeHead(200, {
