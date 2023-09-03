@@ -1,7 +1,8 @@
-var mongodbUri = "mongodb://username:password@127.0.0.1/local?authSource=admin";
+var mongodbUri = "mongodb://username:password@127.0.0.1/?authSource=admin";
+var dbName = "local";
 var collectionName = "login";
 var Db = require("./db");
-var db = new Db(mongodbUri,collectionName);
+var db = new Db(mongodbUri,dbName,collectionName);
 var express = require("express");
 var bodyParser = require("body-parser");
 var session = require("express-session");
@@ -10,7 +11,9 @@ var app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
-    secret: "abcabcabcabc"
+    secret: "abcabcabcabc",
+    resave: false,
+    saveUninitialized: false
 }));
 
 

@@ -1,17 +1,17 @@
 var MongoClient = require("mongodb").MongoClient;
-var ObjectId = require('mongodb').ObjectID;
-module.exports = function(mongodbUri, collectionName) {
+var ObjectId = require('mongodb').ObjectId;
+module.exports = function(mongodbUri, dbName, collectionName) {
     var cache;
 
     function connect(callback) {
         if (!cache) {
-            MongoClient.connect(mongodbUri, function(err, db) {
-                if (!err) {
-                    cache = db;
-                    callback(null, cache.collection(collectionName));
-                } else {
-                    callback(err, null);
-                }
+            var client = new MongoClient(mongodbUri);
+            client.connect().then(function() {
+                var db = client.db(dbName);
+                cache = db;
+                callback(null, cache.collection(collectionName));
+            }, function(err) {
+                callback(err, null);
             });
         } else {
             callback(null, cache.collection(collectionName));
@@ -20,12 +20,10 @@ module.exports = function(mongodbUri, collectionName) {
     this.insert = function(insertObject, success, error) {
         connect(function(err, dbc) {
             if (!err) {
-                dbc.insert(insertObject, function(err, result) {
-                    if (!err) {
-                        if (success) success(result);
-                    } else {
-                        if (error) error(err);
-                    }
+                dbc.insertOne(insertObject).then(function(result) {
+                    if (success) success(result);
+                }, function(err) {
+                    if (error) error(err);
                 });
             } else {
                 if (error) error(err);
@@ -46,12 +44,10 @@ module.exports = function(mongodbUri, collectionName) {
                 } else {
                     q = filter(dbc);
                 }
-                q.toArray(function(err, data) {
-                    if (!err) {
-                        if (success) success(data);
-                    } else {
-                        if (error) error(err);
-                    }
+                q.toArray().then(function(data) {
+                    if (success) success(data);
+                }, function(err) {
+                    if (error) error(err);
                 });
             } else {
                 if (error) error(err);
@@ -64,12 +60,10 @@ module.exports = function(mongodbUri, collectionName) {
                 if (!updateObject.$set && !updateObject.$unset) {
                     updateObject = { $set: updateObject };
                 }
-                dbc.update({ _id: new ObjectId(id) }, updateObject, function(err, data) {
-                    if (!err) {
-                        if (success) success(data);
-                    } else {
-                        if (error) error(err);
-                    }
+                dbc.updateOne({ _id: new ObjectId(id) }, updateObject).then(function(data) {
+                    if (success) success(data);
+                }, function(err) {
+                    if (error) error(err);
                 });
             } else {
                 if (error) error(err);
@@ -79,12 +73,10 @@ module.exports = function(mongodbUri, collectionName) {
     this.remove = function(id, success, error) {
         connect(function(err, dbc) {
             if (!err) {
-                dbc.remove({ _id: new ObjectId(id) }, function(err, data) {
-                    if (!err) {
-                        if (success) success(data);
-                    } else {
-                        if (error) error(err);
-                    }
+                dbc.deleteOne({ _id: new ObjectId(id) }).then(function(data) {
+                    if (success) success(data);
+                }, function(err) {
+                    if (error) error(err);
                 });
             } else {
                 if (error) error(err);

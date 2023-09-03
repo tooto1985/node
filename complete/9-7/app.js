@@ -1,5 +1,5 @@
 var MongoClient = require("mongodb").MongoClient;
-var ObjectId = require('mongodb').ObjectID;
+var ObjectId = require('mongodb').ObjectId;
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
@@ -17,62 +17,56 @@ app.post("/send", function(req, res) {
     if (!username || !email || !age) {
         res.render("message", {message: "請填寫完整資料喔！"});
     } else {
-        MongoClient.connect("mongodb://username:password@127.0.0.1/mydb?authSource=admin", function(err, db) {
-            if (!err) {
-                db.collection("users").insert({username: username, email: email, age: parseInt(age)}, function(err, result) {
-                    if (!err) {
-                        res.render("message", {message: "謝謝您！", success:true});
-                    } else {
-                        res.render("message", {message: "寫入失敗！"});
-                        console.log(err);
-                    }
-                });
-            } else {
-                res.render("message", {message: "連接失敗！"});
+        var client = new MongoClient("mongodb://username:password@127.0.0.1/?authSource=admin");
+        client.connect().then(function() {
+            var db = client.db("mydb");
+            db.collection("users").insertOne({username: username, email: email, age: parseInt(age)}).then(function(result) {
+                res.render("message", {message: "謝謝您！", success:true});
+            }, function(err) {
+                res.render("message", {message: "寫入失敗！"});
                 console.log(err);
-            }
+            })
+        }, function(err) {
+            res.render("message", {message: "連接失敗！"});
+            console.log(err);
         });
     }
 });
 app.get("/list",function(req,res){
-    MongoClient.connect("mongodb://username:password@127.0.0.1/mydb?authSource=admin", function(err, db) {
-        if (!err) {
-            var age = req.query.age;
-            var filter = {};
-            if (age) {
-                age = parseInt(age);
-                filter = {age:{$gte:age}};
-            }
-            db.collection("users").find(filter).toArray(function(err,data) {
-                if (!err) {
-                    res.render("list",{data:data,query:req.query});
-                } else {
-                    res.render("message", {message: "讀取失敗！"});
-                    console.log(err);
-                }
-            });
-        } else {
-            res.render("message", {message: "連接失敗！"});
-            console.log(err);
+    var client = new MongoClient("mongodb://username:password@127.0.0.1/?authSource=admin");
+    client.connect().then(function() {
+        var db = client.db("mydb");
+        var age = req.query.age;
+        var filter = {};
+        if (age) {
+            age = parseInt(age);
+            filter = {age:{$gte:age}};
         }
+        db.collection("users").find(filter).toArray().then(function(data) {
+            res.render("list",{data:data,query:req.query});
+        }, function(err) {
+            res.render("message", {message: "讀取失敗！"});
+            console.log(err);
+        });
+    }, function(err) {
+        res.render("message", {message: "連接失敗！"});
+        console.log(err);
     });
 });
 app.get("/edit/:id",function(req,res) {
-    MongoClient.connect("mongodb://username:password@127.0.0.1/mydb?authSource=admin", function(err, db) {
-        if (!err) {
-            var id=req.params.id;
-            db.collection("users").find({_id: new ObjectId(id)}).toArray(function(err,data) {
-                if (!err ) {
-                    res.render("edit",{data:data[0]});
-                } else {
-                    res.render("message", {message: "讀取失敗！"});
-                    console.log(err);
-                }
-            });
-        } else {
-            res.render("message", {message: "連接失敗！"});
+    var client = new MongoClient("mongodb://username:password@127.0.0.1/?authSource=admin");
+    client.connect().then(function() {
+        var db = client.db("mydb");
+        var id=req.params.id;
+        db.collection("users").find({_id: new ObjectId(id)}).toArray().then(function(data) {
+            res.render("edit",{data:data[0]});
+        }, function(err) {
+            res.render("message", {message: "讀取失敗！"});
             console.log(err);
-        }
+        });
+    }, function(err) {
+        res.render("message", {message: "連接失敗！"});
+        console.log(err);
     });
 });
 app.post("/edit",function(req,res) {
@@ -83,20 +77,18 @@ app.post("/edit",function(req,res) {
     if (!id || !username || !email || !age) {
         res.render("message", {message: "請填寫完整資料喔！"});
     } else {
-        MongoClient.connect("mongodb://username:password@127.0.0.1/mydb?authSource=admin", function(err, db) {
-            if (!err) {
-                db.collection("users").update({_id: new ObjectId(id)},{$set:{username: username,email: email, age: parseInt(age)}},function(err,data) {
-                    if (!err) {
-                        res.redirect("../list");
-                    } else {
-                        res.render("message", {message: "寫入失敗！"});
-                        console.log(err);
-                    }
-                });
-            } else {
-                res.render("message", {message: "連接失敗！"});
+        var client = new MongoClient("mongodb://username:password@127.0.0.1/?authSource=admin");
+        client.connect().then(function() {
+            var db = client.db("mydb");
+            db.collection("users").updateOne({_id: new ObjectId(id)},{$set:{username: username,email: email, age: parseInt(age)}}).then(function(data) {
+                res.redirect("../list");
+            }, function(err) {
+                res.render("message", {message: "寫入失敗！"});
                 console.log(err);
-            }
+            });
+        }, function(err) {
+            res.render("message", {message: "連接失敗！"});
+            console.log(err);
         });
     }
 });

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container flip">
+            <form class="login-form">
+                <h3 class="title">Hello.</h3>
+                <div class="form-group">
+                    <input class="form-input" tooltip-class="username-tooltip" placeholder="Username" id="username"></input>
+                    <span id="username-tool" class="tooltip username-tooltip" style="display: none;">What's your username?</span>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" tooltip-class="password-tooltip" placeholder="Password" id="password"></input>
+                    <span class="tooltip password-tooltip" style="display: none;">What's your password?</span>
+                </div>
+                <div class="form-group">
+                    <button class="login-button">Login</button>
+                    <label>
+                        <input class="remember-checkbox" type="checkbox"></input>
+                        <p class="remember-p">Remember me</p>
+                    </label>
+                </div>
+            </form>
+            <div class="loading">
+                <div class="loading-spinner-large" style="display: none;"></div>
+                <div class="loading-spinner-small" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

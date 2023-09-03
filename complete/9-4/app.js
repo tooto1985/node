@@ -16,24 +16,19 @@ app.post("/send", function(req, res) {
     if (!username || !email || !age) {
         res.render("message", {message: "請填寫完整資料喔！"});
     } else {
-        MongoClient.connect("mongodb://username:password@127.0.0.1/mydb?authSource=admin", function(err, db) {
-            if (!err) {
-                db.collection("users").insert({username: username, email: email, age: parseInt(age)}, function(err, result) {
-                    if (!err) {
-                        res.render("message", {message: "謝謝您！", success:true});
-                    } else {
-                        res.render("message", {message: "寫入失敗！"});
-                        console.log(err);
-                    }
-                });
-            } else {
-                res.render("message", {message: "連接失敗！"});
+        var client = new MongoClient("mongodb://username:password@127.0.0.1/?authSource=admin");
+        client.connect().then(function() {
+            var db = client.db("mydb");
+            db.collection("users").insertOne({username: username, email: email, age: parseInt(age)}).then(function(result) {
+                res.render("message", {message: "謝謝您！", success:true});
+            }, function(err) {
+                res.render("message", {message: "寫入失敗！"});
                 console.log(err);
-            }
+            })
+        }, function(err) {
+            res.render("message", {message: "連接失敗！"});
+            console.log(err);
         });
     }
 });
 app.listen(process.env.PORT || 3000);
-   
-   
-   

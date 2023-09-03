@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.post("/upload", uploading.any(), function(req, res) {
     for (var i = 0; i < req.files.length; i++) {
         var file = req.files[i];
-        fs.rename(file.path, "./upload/" + file.originalname);
+        fs.rename(file.path, "./upload/" + file.originalname, function() {});
     }
     res.send("ok:" + req.body.message);
 });

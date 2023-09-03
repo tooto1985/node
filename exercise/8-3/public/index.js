@@ -1,64 +1,111 @@
-$(function() {
-    function setCookie(name, value, days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toGMTString();
-        }
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
-    function getCookie(c_name) {
-        if (document.cookie.length > 0) {
-            var c_start = document.cookie.indexOf(c_name + "=");
-            if (c_start != -1) {
-                c_start = c_start + c_name.length + 1;
-                var c_end = document.cookie.indexOf(";", c_start);
-                if (c_end == -1) {
-                    c_end = document.cookie.length;
-                }
-                return unescape(document.cookie.substring(c_start, c_end));
-            }
-        }
-        return "";
-    }
-    $(".tooltip").hide();
-    $(".form-input").focus(function() {
-        $(".tooltip").fadeOut(250);
-        $("." + $(this).attr("tooltip-class")).fadeIn(500);
-    });
-    $(".form-input").blur(function() {
-        $(".tooltip").fadeOut(250);
-    });
-    $(".login-button").click(function(event) {
-        event.preventDefault();
-    });
-    $(".login-button,.loading").click(function() {
-        if ($(".login-form").css("transform") == "none") {
-            $(".login-form").css("transform", "rotateY(-180deg)");
-            $(".loading").css("transform", "rotateY(0deg)");
-            var delay = 600;
-            setTimeout(function() {
-                $(".loading-spinner-large").css("display", "block");
-                $(".loading-spinner-small").css("display", "block");
-            }, delay);
-            if ($(".remember-checkbox").is(":checked")) {
-                setCookie("username", $("#username").val(), 7);
-            } else {
-                setCookie("username", null, -1);
-            }
+$(function($) {
+    function toggle_panel_visibility($lateral_panel, $background_layer, $body) {
+        if ($lateral_panel.hasClass('speed-in')) {
+            $lateral_panel.removeClass('speed-in').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+                $body.removeClass('overflow-hidden');
+            });
+            $background_layer.removeClass('is-visible');
         } else {
-            $(".login-form").css("transform", "");
-            $(".loading").css("transform", "");
-            var delay = 600;
-            setTimeout(function() {
-                $(".loading-spinner-large").css("display", "none");
-                $(".loading-spinner-small").css("display", "none");
-            }, delay);
+            $lateral_panel.addClass('speed-in').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+                $body.addClass('overflow-hidden');
+            });
+            $background_layer.addClass('is-visible');
+        }
+    }
+
+    function move_navigation($navigation, $MQ) {
+        if ($(window).width() >= $MQ) {
+            $navigation.detach();
+            $navigation.appendTo('header');
+        } else {
+            $navigation.detach();
+            $navigation.insertAfter('header');
+        }
+    }
+    var $L = 1200,
+        $menu_navigation = $('#main-nav'),
+        $cart_trigger = $('#cd-cart-trigger'),
+        $hamburger_icon = $('#cd-hamburger-menu'),
+        $lateral_cart = $('#cd-cart'),
+        $shadow_layer = $('#cd-shadow-layer');
+    $hamburger_icon.on('click', function(event) {
+        event.preventDefault();
+        $lateral_cart.removeClass('speed-in');
+        toggle_panel_visibility($menu_navigation, $shadow_layer, $('body'));
+    });
+    $cart_trigger.on('click', function(event) {
+        event.preventDefault();
+        $menu_navigation.removeClass('speed-in');
+        toggle_panel_visibility($lateral_cart, $shadow_layer, $('body'));
+    });
+    $shadow_layer.on('click', function() {
+        $shadow_layer.removeClass('is-visible');
+        if ($lateral_cart.hasClass('speed-in')) {
+            $lateral_cart.removeClass('speed-in').on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+                $('body').removeClass('overflow-hidden');
+            });
+            $menu_navigation.removeClass('speed-in');
+        } else {
+            $menu_navigation.removeClass('speed-in').on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+                $('body').removeClass('overflow-hidden');
+            });
+            $lateral_cart.removeClass('speed-in');
         }
     });
-    if (getCookie("username")) {
-        $("#username").val(getCookie("username"));
-        $(".remember-checkbox").attr("checked", true);
+    move_navigation($menu_navigation, $L);
+    $(window).on('resize', function() {
+        move_navigation($menu_navigation, $L);
+        if ($(window).width() >= $L && $menu_navigation.hasClass('speed-in')) {
+            $menu_navigation.removeClass('speed-in');
+            $shadow_layer.removeClass('is-visible');
+            $('body').removeClass('overflow-hidden');
+        }
+
+    });
+});
+$(function($) {
+    function cartlist(data) {
+        var html = "";
+        var total = 0;
+        for (var i = 0; i < data.length; i++) {
+            html += "<li>";
+            html += "<span class=\"cd-qty\">1x</span><span class=\"item\">" + data[i].name + "</span>";
+            html += "<div class=\"cd-price\">$" + data[i].price + "</div>";
+            html += "<a href=\"#0\" class=\"cd-item-remove cd-img-replace\">Remove</a>";
+            html += "</li>";
+            total += data[i].price;
+        }
+        $(".cd-cart-items").html(html);
+        $(".cd-cart-total span").text("$" + total);
     }
+    $("#cd-gallery-items").on("click", "a", function(e) {
+        $.getJSON("/add", {
+            item: $(this).text()
+        }, function(data) {
+            cartlist(data);
+            alert("已加入購物車！");
+        });
+        e.preventDefault();
+    });
+    $(".cd-cart-items").on("click", ".cd-item-remove", function(e) {
+        var item = $(this).parent().find(".item").text();
+        $.getJSON("/remove", {
+            item: item
+        }, function(data) {
+            cartlist(data);
+            alert("已刪除商品！");
+        });
+        e.preventDefault();
+    });
+    $.getJSON("/list", function(data) {
+        var html = "";
+        for (var i = 0; i < data.length; i++) {
+            html += "<li>";
+            html += "<img title=\"$" + data[i].price + "\" src=\"" + (data[i].img || "img/thumb.jpg") + "\">";
+            html += "<a href=\"#\">" + data[i].name + "</a>";
+            html += "</li>";
+        }
+        $("#cd-gallery-items").html(html);
+    });
+    $.getJSON("/bag", cartlist);
 });

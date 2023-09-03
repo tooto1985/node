@@ -31,7 +31,7 @@ module.exports = function(request, response) {
                                 return;
                             }
                             response.writeHead(200, {
-                                "Content-Type": mime.lookup(pathname),
+                                "Content-Type": mime.getType(pathname),
                                 "Etag": hash
                             });
                             response.write(data);

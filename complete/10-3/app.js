@@ -1,19 +1,21 @@
-var mongodbUri = "mongodb://username:password@127.0.0.1/local?authSource=admin";
-var collectionName = "names";
+var mongodbUri = "mongodb://username:password@127.0.0.1/?authSource=admin";
+var dbName = "local";
+var collectionName = "articles";
 var Db = require("./db");
-var db = new Db(mongodbUri,collectionName);
+var db = new Db(mongodbUri,dbName,collectionName);
 var express = require("express");
 var path = require("path");
 var app = express();
 app.use(express.static(path.join(__dirname,"public")));
 app.get("/api",function(req,res) {
-    var search = req.query.search;
-    db.select({name:new RegExp(search,"i")},function(data) {
-        res.json(data.map(function(a) {
-            return a.name;
-        }));
+    var num = parseInt(req.query.num);
+    var fetch = parseInt(req.query.fetch);
+    db.select(function(dbc) {
+        return dbc.find({num:{$gt:num}}).sort({num:1}).limit(fetch);
+    },function(data){
+        res.json(data);
     },function(err) {
-        res.json([]);
+        console.log(err);
     });
 });
 app.listen(process.env.PORT || 3000);

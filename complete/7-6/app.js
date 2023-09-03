@@ -1,10 +1,10 @@
-var http = require("http");
+var https = require("https");
 var express = require("express");
 var app = express();
 app.get("/", function(req, res) {
     var url = req.query.url;
     if (url) {
-        http.get(url, function(response) {
+        https.get(url, function(response) {
             var body = [];
             response.on("data", function(chunk) {
                 body.push(chunk);

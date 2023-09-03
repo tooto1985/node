@@ -22,7 +22,7 @@ http.createServer(function(request, response) {
         if (!err) {
             if (stats.isFile()) {
                 response.writeHead(200, {
-                    "Content-Type": mime.lookup(pathname)
+                    "Content-Type": mime.getType(pathname)
                 });
                 fs.readFile(pathname, function(err, data) {
                     if (!err) {

@@ -1,38 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css">
+	<title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <div class="form-container flip">
-            <form class="login-form">
-                <h3 class="title">Hello.</h3>
-                <div class="form-group">
-                    <input class="form-input" tooltip-class="username-tooltip" placeholder="Username" id="username"></input>
-                    <span id="username-tool" class="tooltip username-tooltip" style="display: none;">What's your username?</span>
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-input" tooltip-class="password-tooltip" placeholder="Password" id="password"></input>
-                    <span class="tooltip password-tooltip" style="display: none;">What's your password?</span>
-                </div>
-                <div class="form-group">
-                    <button class="login-button">Login</button>
-                    <label>
-                        <input class="remember-checkbox" type="checkbox"></input>
-                        <p class="remember-p">Remember me</p>
-                    </label>
-                </div>
-            </form>
-            <div class="loading">
-                <div class="loading-spinner-large" style="display: none;"></div>
-                <div class="loading-spinner-small" style="display: none;"></div>
-            </div>
-        </div>
-    </div>
-    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="index.js"></script>
+	<header>
+		<div id="logo"><img src="img/cd-logo.svg" alt="Homepage"></div>
+		<div id="cd-hamburger-menu"><a class="cd-img-replace" href="#0">Menu</a></div>
+		<div id="cd-cart-trigger"><a class="cd-img-replace" href="#0">Cart</a></div>
+	</header>
+	<nav id="main-nav">
+		<ul>
+			<li><a href="#0">Home</a></li>
+			<li><a href="#0">About</a></li>
+			<li><a class="current" href="#0">Services</a></li>
+			<li><a href="#0">Gallery</a></li>
+			<li><a href="#0">Contact</a></li>
+		</ul>
+	</nav>
+	<main>
+		<ul id="cd-gallery-items" class="cd-container"></ul>
+	</main>
+	<div id="cd-shadow-layer"></div>
+	<div id="cd-cart">
+		<h2>Cart</h2>
+		<ul class="cd-cart-items"></ul>
+		<div class="cd-cart-total">
+			<p>Total <span>$0</span></p>
+		</div>
+		<a href="#0" class="checkout-btn">Checkout</a>
+		<p class="cd-go-to-cart"><a href="#0">Go to cart page</a></p>
+	</div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="index.js"></script>
 </body>
 </html>

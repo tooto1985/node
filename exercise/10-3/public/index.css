@@ -1,50 +1,30 @@
-body
+﻿body
 {
-    background-image: url(images/bg.png);
+    background-color: #E9EAED;
 }
 
-.box
-{
-    position: relative;
-    left: 50%;
-    margin-left: -200px;
-    width: 400px;
-    top: 200px;
-}
-
-#search
+.article
 {
     width: 400px;
-    border: 1px solid white;
-    background-color: gray;
-    color: white;
-    font-size: 20px;
-    padding: 5px;
-    outline: none;
+    border: 1px solid #D0D1D5;
+    background-color: White;
+    margin: 10px auto;
+    padding: 10px;
 }
 
-.list
+.title
 {
-    width: 408px;
-    border: 2px solid lightgrey;
-    max-height: 300px;
-    overflow: auto;
-    display: none;
-    text-align: left;
-    background-color: white;
-    margin-top: -2px;
+    color: #3B59B1;
+    font-weight: bold;
+	margin-bottom: 20px;
 }
 
-    .list > a
-    {
-        display: block;
-        height: 30px;
-        font-size: 25px;
-        font-family: arial;
+.content 
+{
+    color: #333333;
     }
 
-        .list > a.selected
-        {
-            color:white;
-            background-color: gray;
-        }
+*
+{
+    font-size: 14px;
+}
